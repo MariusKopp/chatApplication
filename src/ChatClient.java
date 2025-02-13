@@ -16,6 +16,10 @@ public class ChatClient {
 			String host = args[0];
 			int port = Integer.parseInt(args[1]);
 			String username = args[2];
+			if(username.equals("all")){
+				System.out.println("You cannot log in as 'all'. Choose another username.");
+				return;
+			}
 
 			Registry registry = LocateRegistry.getRegistry(host, port); 
 			System.out.println("Registry\n" + registry);
@@ -27,12 +31,13 @@ public class ChatClient {
 				System.out.println("\nChat App Menu (" + username + "):");
 				System.out.println("1. List messages");
 				System.out.println("2. Send a message");
-				System.out.println("3. Exit");
+				System.out.println("3. Send to all");
+				System.out.println("4. Exit");
 				System.out.print("Choose an option: ");
 				
 				int choice = scanner.nextInt();
 				scanner.nextLine(); // Consume newline
-				
+				String content = "";
 				switch (choice) {
 					case 1:
 						// System.out.print("Enter your name to view your messages: ");
@@ -59,13 +64,21 @@ public class ChatClient {
 						String receiver = scanner.nextLine();
 						
 						System.out.print("Enter message content: ");
-						String content = scanner.nextLine();
+						content = scanner.nextLine();
 						
 						// Message message = new Message(sender, receiver, content);
-						ch.send(username, receiver, content);
+						ch.send(receiver, username, content);
 						System.out.println("Message sent!");
 						break;
 					case 3:
+						System.out.print("Enter message content: ");
+						content = scanner.nextLine();
+						
+						// Message message = new Message(sender, receiver, content);
+						ch.sendAll(username, content);
+						System.out.println("Message sent!");
+						break;
+					case 4:
 						System.out.println("Exiting...");
 						return;
 					default:
