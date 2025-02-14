@@ -22,7 +22,6 @@ public class ChatClient {
 			}
 
 			Registry registry = LocateRegistry.getRegistry(host, port); 
-			System.out.println("Registry\n" + registry);
 			Chat ch = (Chat) registry.lookup("ChatService");
 
 			Scanner scanner = new Scanner(System.in);
@@ -36,37 +35,23 @@ public class ChatClient {
 				System.out.print("Choose an option: ");
 				
 				int choice = scanner.nextInt();
-				scanner.nextLine(); // Consume newline
+				scanner.nextLine();
 				String content = "";
 				switch (choice) {
 					case 1:
-						// System.out.print("Enter your name to view your messages: ");
-						// String user = scanner.nextLine();
-
 						List<Message> myMessages = ch.recieve(username);
-						// List<Message> myMessages = new ArrayList<>();
-						// myMessages.add(ch.recieve(username));
 						System.out.println("My messages are\n");
 						for (Message msg : myMessages){
 							System.out.println(msg);
 						}
-						
-						// System.out.println("\nMessages for " + user + ":");
-						// messages.stream()
-						// 		.filter(msg -> msg.getReceiver().equals(user))
-						// 		.forEach(System.out::println);
 						break;
 					case 2:
-						// System.out.print("Enter your name: ");
-						// String sender = scanner.nextLine();
-						
 						System.out.print("Enter receiver's name: ");
 						String receiver = scanner.nextLine();
 						
 						System.out.print("Enter message content: ");
 						content = scanner.nextLine();
 						
-						// Message message = new Message(sender, receiver, content);
 						ch.send(receiver, username, content);
 						System.out.println("Message sent!");
 						break;
@@ -74,7 +59,6 @@ public class ChatClient {
 						System.out.print("Enter message content: ");
 						content = scanner.nextLine();
 						
-						// Message message = new Message(sender, receiver, content);
 						ch.sendAll(username, content);
 						System.out.println("Message sent!");
 						break;
@@ -85,12 +69,7 @@ public class ChatClient {
 						System.out.println("Invalid option, please try again.");
 				}
 			}
-			
-			// String res = h.sayHello(clientInfo);
-			// System.out.println(res);
-
 		} catch (Exception e)  {
-	//		System.err.println("Error on client: " + e);
 			e.printStackTrace();
 		}
 	}

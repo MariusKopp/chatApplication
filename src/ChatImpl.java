@@ -14,27 +14,17 @@ public  class ChatImpl implements Chat {
 	private String filename = "msgHistory.dat";
  
 	public ChatImpl() throws RemoteException {
-		// this.messageList = new ArrayList<Message>();
-		// try{
-			this.messageList = FileUtils.loadListFromFile(this.filename);
-		// } catch(Exception e){
-		if (this.messageList == null)
+		this.messageList = FileUtils.loadListFromFile(this.filename);
+		if (this.messageList == null){
 			this.messageList = new ArrayList<Message>();
-		// }
+		}
 	}
 
 	@Override
 	public void send(String receiver, String sender, String message) throws RemoteException{
-		// try{
-			Message msg = new Message(message, sender, receiver);
-			this.messageList.add(msg);
-			FileUtils.saveListToFile(this.messageList, this.filename);
-			// for(Message m : this.messageList){
-			// 	System.out.println(m);
-			// }
-		// } catch (RemoteException e){
-		// 	e.printStackTrace();
-		// }
+		Message msg = new Message(message, sender, receiver);
+		this.messageList.add(msg);
+		FileUtils.saveListToFile(this.messageList, this.filename);
 	}
 
 	@Override
@@ -44,20 +34,10 @@ public  class ChatImpl implements Chat {
 
 	@Override
 	public List<Message> recieve(String username) throws RemoteException {
-		List<Message> recievedMessages = null;//new ArrayList<>();
-
-		// for (Message msg : this.messageList){
-		// 	if(msg.receiver.equals(username)){
-		// 		recievedMessages.add(msg);
-		// 	}
-		// }
-		// try{
-			recievedMessages = this.messageList.stream()
+		List<Message> recievedMessages = null;
+		recievedMessages = this.messageList.stream()
 			.filter(msg -> msg.receiver.equals(username) || msg.receiver.equals("all"))
 			.collect(Collectors.toList());
-		// } catch (RemoteException e){
-		// 	e.printStackTrace();
-		// }
 		return recievedMessages;
 	}
 
