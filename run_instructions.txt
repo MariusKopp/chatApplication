@@ -5,9 +5,9 @@ go to:
 	your/path/to/chatApplication
 run:
 	javac -d classes src/*.java
-	start rmiregistry
 go to:
 	/classes
+	start rmiregistry
 run:
 	java ChatServer
 open new cmd
