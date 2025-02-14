@@ -1,0 +1,17 @@
+instructions for windows 10
+
+open cmd
+go to:
+	your/path/to/chatApplication
+run:
+	javac -d classes src/*.java
+	start rmiregistry
+go to:
+	/classes
+run:
+	java ChatServer
+open new cmd
+go to:
+	your/path/to/chatApplication/classes
+run:
+	java -cp . ChatClient 127.0.0.1 1099 <username>
